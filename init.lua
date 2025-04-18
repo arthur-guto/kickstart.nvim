@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -878,6 +878,17 @@ require('lazy').setup({
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
+        -- ▼▼▼ Desativa TODOS os efeitos de dimming ▼▼▼ --
+        style = 'night', -- estilo fixo (sem variações)
+        dim_inactive = false, -- janelas inativas NÃO escurecem
+        on_colors = function(colors)
+          colors.bg_statusline = colors.none -- remove fundo da barra de status
+        end,
+        on_highlights = function(hl, colors)
+          hl.InactiveWindow = { bg = colors.none } -- remove dimming de splits
+          hl.Normal = { bg = colors.none } -- evita sobreposição com o terminal
+        end,
+        -- ▲▲▲----------------------------------------▲▲▲ --
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
